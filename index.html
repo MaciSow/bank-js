@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-piggy-bank"></i>
+            Bank
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="btn btn-outline-success" href="#details">
+                        <i class="fas fa-paw"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="jumbotron">
+        <h1 class="display-1">Bank!</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+            featured content or information.</p>
+        <hr class="my-4">
+
+        <input type="file" accept="text/plain" class="form-control-file" id="bankDataInput">
+        <hr class="my-4">
+    </div>
+
+    <section id="action" class="section ">
+        <h2 class="display-2">Actions</h2>
+        <div class="action__buttons">
+            <button id="btnPayment" class="btn btn-primary">Payment</button>
+            <button class="btn btn-primary">Transfer</button>
+            <button class="btn btn-primary">History</button>
+            <button class="btn btn-primary">Contest</button>
+        </div>
+        <section id="paymentSection" class="u-hide">
+            <h3 class="display-3">Payment</h3>
+
+            <div class="form-row">
+                <div class="col-md-7">
+                    <select class="custom-select" id="accountNumberSelect"></select>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="input-group">
+       
+                      <input id="paymentAmount" type="number" min="0" class="form-control " required>
+                      <div class="input-group-append">
+                        <span class="input-group-text u-round-r" id="inputGroupPrepend3">$</span>
+                      </div>
+                      <div class="invalid-feedback">
+                        Too many value.
+                      </div>
+        
+                    </div>
+
+
+                </div>
+                <div class="col-md-1">
+
+                    <button id="paymentSubmit" disabled class="btn btn-outline-primary btn-block" type="button">OK</button>    
+                </div>
+            </div>
+
+
+        </section>
+
+    </section>
+
+    <section id="details" class="section u-hide">
+        <h2 class="display-2">Details</h2>
+        <ul id="accountList" class="account"></ul>
+
+    </section>
+
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
