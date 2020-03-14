@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 
 </head>
@@ -47,59 +47,65 @@
         <hr class="my-4">
     </div>
 
-    <section id="action" class="section ">
-        <h2 class="display-2">Actions</h2>
-        <div class="action__buttons">
-            <button id="btnPayment" class="btn btn-primary">Payment</button>
-            <button class="btn btn-primary">Transfer</button>
-            <button class="btn btn-primary">History</button>
-            <button class="btn btn-primary">Contest</button>
-        </div>
-        <section id="paymentSection" class="u-hide">
-            <h3 class="display-3">Payment</h3>
 
-            <div class="form-row">
-                <div class="col-md-7">
-                    <select class="custom-select" id="accountNumberSelect"></select>
-                </div>
-                <div class="col-md-4">
+    <div id="actionContainer" class="slide">
+        <section id="action" class="section">
+            <h2 class="display-2">Actions</h2>
+            <div class="action__buttons">
+                <button id="btnPayment" class="btn btn-primary">Payment</button>
+                <button class="btn btn-primary">Transfer</button>
+                <button class="btn btn-primary">History</button>
+                <button class="btn btn-primary">Contest</button>
+            </div>
+            <div id= "paymentContainer" class="slide">
+                <section id="paymentSection">
+                    <h3 class="display-3">Payment</h3>
 
-                    <div class="input-group">
-       
-                      <input id="paymentAmount" type="number" min="0" class="form-control " required>
-                      <div class="input-group-append">
-                        <span class="input-group-text u-round-r" id="inputGroupPrepend3">$</span>
-                      </div>
-                      <div class="invalid-feedback">
-                        Too many value.
-                      </div>
-        
+                    <div class="form-row">
+                        <div class="col-md-7">
+                            <select class="custom-select" id="accountNumberSelect"></select>
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="input-group">
+
+                                <input id="paymentAmount" type="number" min="0" class="form-control " required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text u-round-r" id="inputGroupPrepend3">$</span>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Too many value.
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-1">
+
+                            <button id="paymentSubmit" disabled class="btn btn-outline-primary btn-block"
+                                type="button">OK</button>
+                        </div>
                     </div>
 
 
-                </div>
-                <div class="col-md-1">
-
-                    <button id="paymentSubmit" disabled class="btn btn-outline-primary btn-block" type="button">OK</button>    
-                </div>
+                </section>
             </div>
-
+        </section>
+    </div>
+    <div id="detailsContainer" class="slide">
+        <section id="details" class="section">
+            <h2 class="display-2">Details</h2>
+            <ul id="accountList" class="account"></ul>
 
         </section>
-
-    </section>
-
-    <section id="details" class="section u-hide">
-        <h2 class="display-2">Details</h2>
-        <ul id="accountList" class="account"></ul>
-
-    </section>
-
+    </div>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
-    <script src="app.js"></script>
+
+    <script type="module" src="js/app.js"></script>
 </body>
 
 </html>

@@ -26,7 +26,18 @@
 .section {
     padding: 32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: 1850ms ;
 }
+
+
+.slide {
+    height: 0;
+    overflow: hidden;
+}
+
+
+
 
 .fa-piggy-bank {
     color: dodgerblue;
@@ -68,7 +79,8 @@
 }
 
 .account__transactions {
-    display: none;
+    /* height: 0; */
+/* display: none; */
 }
 
 .warning {
@@ -78,6 +90,8 @@
 .cashGood {
     color: green;
 }
+
+
 
 /* UTILITIES CLASS */
 
