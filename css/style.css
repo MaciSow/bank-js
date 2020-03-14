@@ -78,10 +78,6 @@
     padding-bottom: 8px;
 }
 
-.account__transactions {
-    /* height: 0; */
-/* display: none; */
-}
 
 .warning {
     color: rgb(172, 0, 0);
@@ -99,6 +95,10 @@
     margin-left: 16px;
 }
 
+.u-mt--sm{
+    margin-top: 16px;
+}
+
 .u-tiext--rght {
     text-align: right;
 }
@@ -109,4 +109,9 @@
 
 .u-width--m {
     width: 80px;
+}
+
+
+.u-text--center{
+    text-align: center;
 }

@@ -18,13 +18,40 @@ export function roundNumber(amount) {
 }
 
 export function formatAmount(amount) {
-    let number = +amount; 
-    return number.toFixed(2); 
+    let number = +amount;
+    return number.toFixed(2);
 }
 
 function addZero(txt) {
-   txt = String(txt).length === 1 ? `0${txt}` : txt;
-   return txt;
+    txt = String(txt).length === 1 ? `0${txt}` : txt;
+    return txt;
+}
+
+export function slideUp(element) {
+    const maxheight = element.firstElementChild.offsetHeight;
+    const time = 250;
+    let timer = null;
+
+    element.style.height = maxheight + 'px';
+
+    clearInterval(timer);
+
+    const instanceheight = parseInt(element.style.height);
+    const init = (new Date()).getTime();
+    const height = 0;
+    const disp = height - parseInt(element.style.height);
+
+    timer = setInterval(() => {
+
+        let instance = (new Date()).getTime() - init;
+        if (instance <= time) {
+            let pos = instanceheight + Math.floor(disp * instance / time);
+            element.style.height = pos + 'px';
+        } else {
+            element.removeAttribute('style')
+            clearInterval(timer);
+        }
+    }, 20);
 }
 
 export function slideDown(element) {
@@ -32,7 +59,7 @@ export function slideDown(element) {
     element.style.height = '0px';
 
     const maxheight = element.firstElementChild.offsetHeight;
-    const time = 500;
+    const time = 250;
     let timer = null;
 
     clearInterval(timer);
@@ -52,14 +79,14 @@ export function slideDown(element) {
             element.style.height = '100%';
             clearInterval(timer);
         }
-    }, 25);
+    }, 20);
 }
 
 export function slideToggle(element) {
     const slider = element;
     const isOpen = element.style.height === '100%'
     const maxheight = element.firstElementChild.offsetHeight;
-    const time = 500;
+    const time = 250;
     let timer = null;
     clearInterval(timer);
 
@@ -84,5 +111,17 @@ export function slideToggle(element) {
             isOpen ? slider.removeAttribute('style') : slider.style.height = '100%';
             clearInterval(timer);
         }
-    }, 25);
+    }, 20);
+}
+
+export function collapseWithoutCurrent(container, current) {
+    const actionsSlide = document.querySelector(`#${container}`).querySelectorAll('.slide');
+    let isOpen = false;
+    actionsSlide.forEach(item => {
+        if (item.hasAttribute('style') && item !== current) {
+            slideUp(item)
+            isOpen = true;
+        }
+    });
+    return isOpen;
 }

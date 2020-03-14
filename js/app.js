@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideDown, slideToggle } from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideDown, slideToggle, collapseWithoutCurrent } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 
@@ -24,7 +24,7 @@ bankDataInput.addEventListener('change', () => {
 
 btnPayment.addEventListener('click', paymentAction);
 
-btnTransfer.addEventListener('click', paymentAction);
+btnTransfer.addEventListener('click', transferAction);
 
 
 function generateAccountList(accounts) {
@@ -77,20 +77,24 @@ function readData(file) {
 
 function paymentAction() {
     const paymentSection = document.querySelector('#paymentContainer');
-    const inputSelect = document.querySelector('#accountNumberSelect');
-    const inputAmount = document.querySelector('#paymentAmount');
-    const submitBtn = document.querySelector('#paymentSubmit');
+    const inputSelect = paymentSection.querySelector('#accountNumberSelect');
+    const inputAmount = paymentSection.querySelector('#paymentAmount');
+    const submitBtn = paymentSection.querySelector('#paymentSubmit');
     let isSelected = false;
     let isAmount = false;
 
-    slideToggle(paymentSection);
+    const wait = collapseWithoutCurrent('actionContainer', paymentSection);
+
+    setTimeout(() => {
+        slideToggle(paymentSection);
+    }, wait ? 250 : 0)
 
     inputSelect.selectedIndex = 0;
     inputAmount.value = '';
     submitBtn.setAttribute('disabled', true);
     inputAmount.classList.remove('is-invalid');
     inputSelect.innerHTML = null;
-    inputSelect.innerHTML = `<option selected>Select Account Number...</option>`;
+    inputSelect.innerHTML = `<option value="0" selected>Select Account Number...</option>`;
 
     accounts.forEach(item => {
         let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
@@ -98,7 +102,7 @@ function paymentAction() {
     });
 
     inputSelect.addEventListener('change', () => {
-        isSelected = inputSelect.selectedOptions[0].value !== 'Select Account Number...';
+        isSelected = +inputSelect.selectedOptions[0].value !== 0;
         toggleDisableBtn(submitBtn, isSelected, isAmount);
     });
 
@@ -144,3 +148,79 @@ function paymentAction() {
 
 }
 
+function transferAction() {
+    const transferContainer = document.querySelector('#transferContainer');
+    const senderAccNumSelect = transferContainer.querySelector('#senderAccNumSelect');
+    const receiverAccNumSelect = transferContainer.querySelector('#receiverAccNumSelect');
+    const transferAmount = transferContainer.querySelector('#transferAmount');
+    const transferSubmit = transferContainer.querySelector('#transferSubmit');
+    const inputTransferGroup = transferContainer.querySelector('.input-group');
+    let wait = collapseWithoutCurrent('actionContainer', transferContainer);
+    let senderSelectedAccount;
+
+    setTimeout(() => {
+        slideToggle(transferContainer);
+    }, wait ? 250 : 0)
+
+    senderAccNumSelect.selectedIndex = 0;
+    senderAccNumSelect.innerHTML = null;
+    senderAccNumSelect.innerHTML = `<option value="0" selected>Select Sender Account Number...</option>`;
+
+    accounts.forEach(item => {
+        let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
+        senderAccNumSelect.innerHTML += option;
+    });
+
+    senderAccNumSelect.addEventListener('change', () => {
+        senderSelectedAccount = +senderAccNumSelect.selectedOptions[0].value;
+        inputTransferGroup.classList.add('u-hide');
+
+        if (senderSelectedAccount === 0) {
+            receiverAccNumSelect.classList.add('u-hide');
+            return;
+        }
+
+        receiverAccNumSelect.classList.remove('u-hide');
+        receiverAccNumSelect.selectedIndex = 0;
+        receiverAccNumSelect.innerHTML = null;
+        receiverAccNumSelect.innerHTML = `<option value="0" selected>Select Receiver Account Number...</option>`;
+
+        accounts.forEach(item => {
+            if (item.accountNumber !== senderSelectedAccount) {
+                let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
+                receiverAccNumSelect.innerHTML += option;
+            }
+        });
+    });
+
+    receiverAccNumSelect.addEventListener('change', () => {
+        const receiverSelectedAccount = +receiverAccNumSelect.selectedOptions[0].value;
+
+        if (receiverSelectedAccount === 0) {
+            inputTransferGroup.classList.add('u-hide');
+            return;
+        }
+        inputTransferGroup.classList.remove('u-hide');
+        transferAmount.value = '';
+    });
+    
+    transferAmount.addEventListener('input', () => {
+        transferAmount.classList.remove('is-invalid');
+        
+        if(transferAmount.value !== '' && transferAmount.value > 0){;
+        transferSubmit.classList.remove('u-hide');
+        }
+        else{
+            transferSubmit.classList.add('u-hide');
+        }
+
+        const account = accounts.find(item => item.accountNumber == senderSelectedAccount);
+        
+        if (account.balance < transferAmount.value) {
+            transferAmount.classList.add('is-invalid');
+            transferSubmit.classList.add('u-hide');
+        }
+    });
+
+
+}

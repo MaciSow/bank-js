@@ -53,14 +53,13 @@
             <h2 class="display-2">Actions</h2>
             <div class="action__buttons">
                 <button id="btnPayment" class="btn btn-primary">Payment</button>
-                <button class="btn btn-primary">Transfer</button>
-                <button class="btn btn-primary">History</button>
-                <button class="btn btn-primary">Contest</button>
+                <button id="btnTransfer" class="btn btn-primary">Transfer</button>
+                <button id="btnHistory" class="btn btn-primary">History</button>
+                <button id="btnContest" class="btn btn-primary">Contest</button>
             </div>
-            <div id= "paymentContainer" class="slide">
+            <div id="paymentContainer" class="slide">
                 <section id="paymentSection">
                     <h3 class="display-3">Payment</h3>
-
                     <div class="form-row">
                         <div class="col-md-7">
                             <select class="custom-select" id="accountNumberSelect"></select>
@@ -87,8 +86,43 @@
                                 type="button">OK</button>
                         </div>
                     </div>
+                </section>
+            </div>
 
+            <div id="transferContainer"  class="slide" >
+                <section id="transfertSection">
+                    <h3 class="display-3">Tranfser</h3>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <select class="custom-select" id="senderAccNumSelect"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="custom-select u-hide" id="receiverAccNumSelect"></select>
+                        </div>
+                    </div>
+                    <div class="form-row u-mt--sm">
+                        <div class="col-md-6">
+                            <div class="input-group u-hide">
 
+                                <input id="transferAmount" type="number" min="0" class="form-control " required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text u-round-r" id="inputGroupPrepend3">$</span>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Too many value.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2"></div>
+
+                        <div class="col-md-2">
+                            <button id="transferSubmit" class="btn btn-outline-primary btn-block u-hide"
+                                type="button">OK</button>
+                        </div>
+                        
+                        <div class="col-md-2 "></div>
+                    </div>
                 </section>
             </div>
         </section>
@@ -97,7 +131,6 @@
         <section id="details" class="section">
             <h2 class="display-2">Details</h2>
             <ul id="accountList" class="account"></ul>
-
         </section>
     </div>
 
