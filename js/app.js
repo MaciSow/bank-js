@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideDown, slideToggle, collapseWithoutCurrent } from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 
@@ -116,8 +116,7 @@ function paymentAction() {
     submitBtn.addEventListener('click', () => {
         const accountNumber = inputSelect.selectedOptions[0].value;
         const amountValue = roundNumber(inputAmount.value);
-        const account = accounts.find(item => item.accountNumber == accountNumber);
-        let accountHtml = document.querySelector('#nr' + accountNumber);
+        const account = accounts.find(item => String(item.accountNumber) == accountNumber); 
 
         if (amountValue > account.balance + account.debit) {
             inputAmount.classList.add('is-invalid');
@@ -129,15 +128,7 @@ function paymentAction() {
         account.balance -= amountValue;
         const transaction = new Transaction(null, -amountValue);
         account.addTransaction(transaction);
-
-        accountHtml.outerHTML = account.generateHtmlAccount();
-        accountHtml = document.querySelector('#nr' + accountNumber);
-
-        accountHtml.addEventListener('click', (evt) => {
-            const elem = evt.currentTarget.querySelector('.slide');
-
-            slideToggle(elem);
-        });
+        account.rebuildTransactions();
 
         inputSelect.selectedIndex = 0;
         inputAmount.value = '';
@@ -165,6 +156,10 @@ function transferAction() {
     senderAccNumSelect.selectedIndex = 0;
     senderAccNumSelect.innerHTML = null;
     senderAccNumSelect.innerHTML = `<option value="0" selected>Select Sender Account Number...</option>`;
+    transferAmount.value= null;
+    receiverAccNumSelect.classList.add('u-hide');
+    transferSubmit.classList.add('u-hide');
+    inputTransferGroup.classList.add('u-hide');
 
     accounts.forEach(item => {
         let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
@@ -216,11 +211,32 @@ function transferAction() {
 
         const account = accounts.find(item => item.accountNumber == senderSelectedAccount);
         
-        if (account.balance < transferAmount.value) {
+        if (account.balance + account.debit < transferAmount.value) {
             transferAmount.classList.add('is-invalid');
             transferSubmit.classList.add('u-hide');
         }
     });
+    
+    transferSubmit.addEventListener('click', () => {
+        const senderAccountNumber = senderAccNumSelect.selectedOptions[0].value;
+        const receiverAccountNumber = receiverAccNumSelect.selectedOptions[0].value; 
+        
+        const senderAccount = accounts.find(item => String(item.accountNumber) == senderAccountNumber); 
+        const receiverAccount = accounts.find(item => String(item.accountNumber) == receiverAccountNumber); 
 
+        const amountValue = roundNumber(transferAmount.value);
+
+        senderAccount.balance -= amountValue;
+        const senderTransaction = new Transaction(null, -amountValue);
+        senderAccount.addTransaction(senderTransaction);
+        senderAccount.rebuildTransactions();
+
+        receiverAccount.balance += amountValue;
+        const receiverTransaction = new Transaction(null, amountValue);
+        receiverAccount.addTransaction(receiverTransaction);
+        receiverAccount.rebuildTransactions();
+
+        slideUp(transferContainer);
+    });
 
 }

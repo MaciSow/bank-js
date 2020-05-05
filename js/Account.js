@@ -1,3 +1,4 @@
+import { slideToggle } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Account {
@@ -51,5 +52,18 @@ export class Account {
                         <ol class="account__transactions">${transactionItems}</ol>
                     </div>
                 </li>`;
+    }
+
+    rebuildTransactions(){
+        let accountHtml = document.querySelector('#nr' + this.accountNumber)
+
+        accountHtml.outerHTML = this.generateHtmlAccount();
+        accountHtml = document.querySelector('#nr' + this.accountNumber);
+
+        accountHtml.addEventListener('click', (evt) => {
+            const elem = evt.currentTarget.querySelector('.slide');
+
+            slideToggle(elem);
+        });
     }
 }
