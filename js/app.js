@@ -1,6 +1,7 @@
 import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
+import { Payment } from "./Payment.js";
 
 let accounts = [];
 let bankDataInput = document.querySelector('#bankDataInput');
@@ -9,11 +10,15 @@ const btnTransfer = document.querySelector('#btnTransfer');
 const btnHistory = document.querySelector('#btnHistory');
 const btnContest = document.querySelector('#btnContest');
 
+const payment = new Payment();
+
+
 bankDataInput.addEventListener('change', () => {
     let input = bankDataInput;
     let file = input.files[0];
 
     accounts = readData(file);
+    payment.init(accounts);
 
     setTimeout(() => {
         const actionContainer = document.querySelector('#actionContainer');
@@ -22,7 +27,10 @@ bankDataInput.addEventListener('change', () => {
     }, 0);
 });
 
-btnPayment.addEventListener('click', paymentAction);
+
+
+btnPayment.addEventListener('click', payment.show.bind(payment));
+
 
 btnTransfer.addEventListener('click', transferAction);
 
@@ -73,70 +81,6 @@ function readData(file) {
     };
     reader.readAsText(file);
     return accounts;
-}
-
-function paymentAction() {
-    const paymentSection = document.querySelector('#paymentContainer');
-    const inputSelect = paymentSection.querySelector('#accountNumberSelect');
-    const inputAmount = paymentSection.querySelector('#paymentAmount');
-    const submitBtn = paymentSection.querySelector('#paymentSubmit');
-    let isSelected = false;
-    let isAmount = false;
-
-    const wait = collapseWithoutCurrent('actionContainer', paymentSection);
-
-    setTimeout(() => {
-        slideToggle(paymentSection);
-    }, wait ? 250 : 0)
-
-    inputSelect.selectedIndex = 0;
-    inputAmount.value = '';
-    submitBtn.setAttribute('disabled', true);
-    inputAmount.classList.remove('is-invalid');
-    inputSelect.innerHTML = null;
-    inputSelect.innerHTML = `<option value="0" selected>Select Account Number...</option>`;
-
-    accounts.forEach(item => {
-        let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
-        inputSelect.innerHTML += option;
-    });
-
-    inputSelect.addEventListener('change', () => {
-        isSelected = +inputSelect.selectedOptions[0].value !== 0;
-        toggleDisableBtn(submitBtn, isSelected, isAmount);
-    });
-
-    inputAmount.addEventListener('input', () => {
-        isAmount = (inputAmount.value !== '' && inputAmount.value > 0);
-        inputAmount.classList.remove('is-invalid');
-        toggleDisableBtn(submitBtn, isSelected, isAmount);
-
-    });
-
-    submitBtn.addEventListener('click', () => {
-        const accountNumber = inputSelect.selectedOptions[0].value;
-        const amountValue = roundNumber(inputAmount.value);
-        const account = accounts.find(item => String(item.accountNumber) == accountNumber); 
-
-        if (amountValue > account.balance + account.debit) {
-            inputAmount.classList.add('is-invalid');
-            submitBtn.setAttribute('disabled', true);
-            isSelected = true;
-            return;
-        }
-
-        account.balance -= amountValue;
-        const transaction = new Transaction(null, -amountValue);
-        account.addTransaction(transaction);
-        account.rebuildTransactions();
-
-        inputSelect.selectedIndex = 0;
-        inputAmount.value = '';
-        submitBtn.setAttribute('disabled', true);
-        isSelected = false;
-        isAmount = false;
-    });
-
 }
 
 function transferAction() {
@@ -236,6 +180,7 @@ function transferAction() {
         receiverAccount.addTransaction(receiverTransaction);
         receiverAccount.rebuildTransactions();
 
+        console.log('schabowy');
         slideUp(transferContainer);
     });
 
