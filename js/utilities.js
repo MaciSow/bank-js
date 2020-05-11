@@ -32,6 +32,7 @@ export function slideUp(element) {
     const time = 250;
     let timer = null;
 
+    element.classList.remove('is-open');
     element.style.height = maxheight + 'px';
 
     clearInterval(timer);
@@ -55,7 +56,7 @@ export function slideUp(element) {
 }
 
 export function slideDown(element) {
-
+    element.classList.add('is-open');
     element.style.height = '0px';
 
     const maxheight = element.firstElementChild.offsetHeight;
@@ -94,8 +95,10 @@ export function slideToggle(element) {
     let height = isOpen ? 0 : maxheight;
 
     if (isOpen) {
+        element.classList.remove('is-open');
         slider.style.height = maxheight + 'px';
     } else {
+        element.classList.add('is-open');
         slider.style.height = '0px';
     }
 
@@ -124,4 +127,19 @@ export function collapseWithoutCurrent(container, current) {
         }
     });
     return isOpen;
+}
+
+export function slideReset(current) {
+    const items = document.querySelectorAll('.js-slide-reset');
+    let anyOpen = false;
+
+    items.forEach(item => {
+        if (item.classList.contains('is-open') && item !== current) {
+            anyOpen = true;
+            slideUp(item);
+        }
+    })
+    setTimeout(() => {
+        slideToggle(current);
+    }, anyOpen ? 250 : 0)
 }

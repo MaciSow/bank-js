@@ -1,14 +1,14 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent } from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent, slideReset} from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Payment {
-    paymentSection = document.querySelector('#paymentContainer');
-    inputSelect = this.paymentSection.querySelector('#accountNumberSelect');
-    inputAmount = this.paymentSection.querySelector('#paymentAmount');
-    submitBtn = this.paymentSection.querySelector('#paymentSubmit');
+    paymentContainer = document.querySelector('#paymentContainer');
+    inputSelect = this.paymentContainer.querySelector('#accountNumberSelect');
+    inputAmount = this.paymentContainer.querySelector('#paymentAmount');
+    submitBtn = this.paymentContainer.querySelector('#paymentSubmit');
     isSelected = false;
     isAmount = false;
-    wait = collapseWithoutCurrent('actionContainer', this.paymentSection);
+    wait = collapseWithoutCurrent('actionContainer', this.paymentContainer);
     accounts = [];
 
 
@@ -22,12 +22,10 @@ export class Payment {
     show() {
         this.clear();
         this.fillAccountList();
-        setTimeout(() => {
-            slideToggle(this.paymentSection);
-        }, this.wait ? 250 : 0)
     }
 
     clear() {
+        slideReset(this.paymentContainer);
         this.inputSelect.selectedIndex = 0;
         this.inputAmount.value = '';
         this.submitBtn.setAttribute('disabled', true);
@@ -36,6 +34,7 @@ export class Payment {
         this.inputSelect.innerHTML = `<option value="0" selected>Select Account Number...</option>`;
         this.isSelected = false;
         this.isAmount = false;
+      
     }
 
     fillAccountList() {
@@ -72,6 +71,6 @@ export class Payment {
         const transaction = new Transaction(null, -amountValue);
         account.addTransaction(transaction);
         account.rebuildTransactions();
-        slideUp(this.paymentSection);
+        slideUp(this.paymentContainer);
     }
 }
