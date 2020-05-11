@@ -117,18 +117,6 @@ export function slideToggle(element) {
     }, 20);
 }
 
-export function collapseWithoutCurrent(container, current) {
-    const actionsSlide = document.querySelector(`#${container}`).querySelectorAll('.slide');
-    let isOpen = false;
-    actionsSlide.forEach(item => {
-        if (item.hasAttribute('style') && item !== current) {
-            slideUp(item)
-            isOpen = true;
-        }
-    });
-    return isOpen;
-}
-
 export function slideReset(current) {
     const items = document.querySelectorAll('.js-slide-reset');
     let anyOpen = false;
@@ -142,4 +130,11 @@ export function slideReset(current) {
     setTimeout(() => {
         slideToggle(current);
     }, anyOpen ? 250 : 0)
+}
+
+export function fillAccountList(accounts, inputSelect){
+    accounts.forEach(item => {
+        let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
+        inputSelect.innerHTML += option;
+    });
 }

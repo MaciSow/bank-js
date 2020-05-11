@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent, slideReset} from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideReset, fillAccountList} from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Payment {
@@ -8,7 +8,6 @@ export class Payment {
     submitBtn = this.paymentContainer.querySelector('#paymentSubmit');
     isSelected = false;
     isAmount = false;
-    wait = collapseWithoutCurrent('actionContainer', this.paymentContainer);
     accounts = [];
 
 
@@ -21,7 +20,7 @@ export class Payment {
 
     show() {
         this.clear();
-        this.fillAccountList();
+        fillAccountList(this.accounts,this.inputSelect);
     }
 
     clear() {
@@ -35,13 +34,6 @@ export class Payment {
         this.isSelected = false;
         this.isAmount = false;
       
-    }
-
-    fillAccountList() {
-        this.accounts.forEach(item => {
-            let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
-            this.inputSelect.innerHTML += option;
-        });
     }
 
     changeAccount() {

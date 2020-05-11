@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent, slideReset } from "./utilities.js";
+import { roundNumber, slideUp, slideReset, fillAccountList } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Transfer {
@@ -8,7 +8,6 @@ export class Transfer {
     transferAmount = this.transferContainer.querySelector('#transferAmount');
     transferSubmit = this.transferContainer.querySelector('#transferSubmit');
     inputTransferGroup = this.transferContainer.querySelector('.input-group');
-    wait = collapseWithoutCurrent('actionContainer', this.transferContainer);
     senderSelectedAccount;
     accounts = [];
 
@@ -22,14 +21,7 @@ export class Transfer {
 
     show() {
         this.clear();
-        this.fillAccountList();
-    }
-
-    fillAccountList() {
-        this.accounts.forEach(item => {
-            let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
-            this.senderAccNumSelect.innerHTML += option;
-        });
+        fillAccountList(this.accounts, this.senderAccNumSelect);
     }
 
     clear() {
@@ -57,12 +49,12 @@ export class Transfer {
         this.receiverAccNumSelect.innerHTML = null;
         this.receiverAccNumSelect.innerHTML = `<option value="0" selected>Select Receiver Account Number...</option>`;
 
-        this.accounts.forEach(item => {
-            if (item.accountNumber !== this.senderSelectedAccount) {
-                let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
-                this.receiverAccNumSelect.innerHTML += option;
-            }
-        });
+        const receiverAccounts = this.accounts.filter(item => item.accountNumber !== this.senderSelectedAccount);
+        fillAccountList(receiverAccounts, this.receiverAccNumSelect);
+        // this.accounts.forEach(item => {
+        //     if (item.accountNumber !== this.senderSelectedAccount) {
+        //         let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
+        //         this.receiverAccNumSelect.innerHTML += option;
     }
 
     changeReceiverAccount() {
@@ -94,12 +86,12 @@ export class Transfer {
         }
     }
 
-    submit(){
+    submit() {
         const senderAccountNumber = this.senderAccNumSelect.selectedOptions[0].value;
-        const receiverAccountNumber = this.receiverAccNumSelect.selectedOptions[0].value; 
-        
-        const senderAccount = this.accounts.find(item => String(item.accountNumber) == senderAccountNumber); 
-        const receiverAccount = this.accounts.find(item => String(item.accountNumber) == receiverAccountNumber); 
+        const receiverAccountNumber = this.receiverAccNumSelect.selectedOptions[0].value;
+
+        const senderAccount = this.accounts.find(item => String(item.accountNumber) == senderAccountNumber);
+        const receiverAccount = this.accounts.find(item => String(item.accountNumber) == receiverAccountNumber);
 
         const amountValue = roundNumber(this.transferAmount.value);
 

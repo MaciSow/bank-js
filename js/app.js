@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, collapseWithoutCurrent, slideReset} from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, slideReset} from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 import { Payment } from "./Payment.js";
