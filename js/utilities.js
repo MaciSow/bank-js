@@ -138,3 +138,9 @@ export function fillAccountList(accounts, inputSelect){
         inputSelect.innerHTML += option;
     });
 }
+
+export function clearAccountList(inputSelect, direction){
+    inputSelect.selectedIndex = 0;
+    inputSelect.innerHTML = null;
+    inputSelect.innerHTML = `<option value="0" selected>Select ${direction} Account Number...</option>`;
+}

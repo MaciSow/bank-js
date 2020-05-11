@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideReset, fillAccountList} from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideReset, fillAccountList, clearAccountList} from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Payment {
@@ -25,15 +25,12 @@ export class Payment {
 
     clear() {
         slideReset(this.paymentContainer);
-        this.inputSelect.selectedIndex = 0;
+        clearAccountList(this.inputSelect,'')
         this.inputAmount.value = '';
         this.submitBtn.setAttribute('disabled', true);
         this.inputAmount.classList.remove('is-invalid');
-        this.inputSelect.innerHTML = null;
-        this.inputSelect.innerHTML = `<option value="0" selected>Select Account Number...</option>`;
         this.isSelected = false;
         this.isAmount = false;
-      
     }
 
     changeAccount() {

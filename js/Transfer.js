@@ -1,4 +1,4 @@
-import { roundNumber, slideUp, slideReset, fillAccountList } from "./utilities.js";
+import { roundNumber, slideUp, slideReset, fillAccountList, clearAccountList } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Transfer {
@@ -26,9 +26,7 @@ export class Transfer {
 
     clear() {
         slideReset(this.transferContainer);
-        this.senderAccNumSelect.selectedIndex = 0;
-        this.senderAccNumSelect.innerHTML = null;
-        this.senderAccNumSelect.innerHTML = `<option value="0" selected>Select Sender Account Number...</option>`;
+        clearAccountList(this.senderAccNumSelect, 'Sender')
         this.transferAmount.value = null;
         this.receiverAccNumSelect.classList.add('u-hide');
         this.transferSubmit.classList.add('u-hide');
@@ -45,16 +43,10 @@ export class Transfer {
         }
 
         this.receiverAccNumSelect.classList.remove('u-hide');
-        this.receiverAccNumSelect.selectedIndex = 0;
-        this.receiverAccNumSelect.innerHTML = null;
-        this.receiverAccNumSelect.innerHTML = `<option value="0" selected>Select Receiver Account Number...</option>`;
+        clearAccountList(this.receiverAccNumSelect, 'Receiver')
 
         const receiverAccounts = this.accounts.filter(item => item.accountNumber !== this.senderSelectedAccount);
         fillAccountList(receiverAccounts, this.receiverAccNumSelect);
-        // this.accounts.forEach(item => {
-        //     if (item.accountNumber !== this.senderSelectedAccount) {
-        //         let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
-        //         this.receiverAccNumSelect.innerHTML += option;
     }
 
     changeReceiverAccount() {
