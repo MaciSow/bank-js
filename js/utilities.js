@@ -12,7 +12,6 @@ export function toggleDisableBtn(btn, condition1, condition2) {
     }
 }
 
-
 export function roundNumber(amount) {
     return Math.floor(amount * 100) / 100;
 }

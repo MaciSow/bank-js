@@ -1,8 +1,9 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, slideReset} from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, slideReset } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 import { Payment } from "./Payment.js";
 import { Transfer } from "./Transfer.js";
+import { History } from "./History.js";
 
 let accounts = [];
 let bankDataInput = document.querySelector('#bankDataInput');
@@ -13,6 +14,7 @@ const btnContest = document.querySelector('#btnContest');
 
 const payment = new Payment();
 const transfer = new Transfer();
+const history = new History();
 
 
 bankDataInput.addEventListener('change', () => {
@@ -22,6 +24,7 @@ bankDataInput.addEventListener('change', () => {
     accounts = readData(file);
     payment.init(accounts);
     transfer.init(accounts);
+    history.init(accounts);
 
     setTimeout(() => {
         const actionContainer = document.querySelector('#actionContainer');
@@ -34,9 +37,9 @@ bankDataInput.addEventListener('change', () => {
 
 btnPayment.addEventListener('click', payment.show.bind(payment));
 
-
 btnTransfer.addEventListener('click', transfer.show.bind(transfer));
 
+btnHistory.addEventListener('click', history.show.bind(history));
 
 function generateAccountList(accounts) {
     let accountItems = '';

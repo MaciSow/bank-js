@@ -1,0 +1,6 @@
+To do list 
+History -> sorting transaction list 
+History -> filtr transaction list 
+History -> clear table before show  
+History -> styling 
+Save changes to file
