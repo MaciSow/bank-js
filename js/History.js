@@ -65,7 +65,7 @@ export class History {
 
         switch (sortDirection) {
             case 'down':
-                 break;
+                break;
             case 'up':
                 sortingData.sort((a, b) => b[sortColumn] - a[sortColumn]);
                 btn.dataset.sortDirection = 'down';
@@ -74,12 +74,39 @@ export class History {
                 sortingData.sort((a, b) => a[sortColumn] - b[sortColumn]);
                 btn.dataset.sortDirection = 'up';
         }
-       
         this.fillTable(sortingData);
+        this.addArrow(btn.dataset.sortDirection, btn);
     }
 
-    resetSortDirections() {     
+    resetSortDirections() {
         const allColumns = historyContainer.querySelectorAll('.js-sort-transaction');
-        allColumns.forEach(item => item.dataset.sortDirection = '')
+        allColumns.forEach(item => {
+            item.dataset.sortDirection = '';
+            this.removeArrow(item);
+        });
+    }
+
+    addArrow(sortDirection, element) {
+        console.log('sortDirection: ', sortDirection);
+        const arrowIco = `<i class="fas fa-arrow-up"></i>`;
+
+        switch (sortDirection) {
+            case 'up':
+                element.insertAdjacentHTML('beforeend', arrowIco);
+                break;
+            case 'down':
+                element.insertAdjacentHTML('beforeend', arrowIco)
+                element.querySelector('.fa-arrow-up').classList.add('fa-rotate-180');
+                break;
+            default:
+                this.removeArrow(element);
+        }
+    }
+
+    removeArrow(element) {
+        const arrow = element.querySelector('.fa-arrow-up');
+        if (arrow) {
+            element.removeChild(arrow);
+        }
     }
 }
