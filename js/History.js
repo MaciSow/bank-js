@@ -45,7 +45,7 @@ export class History {
     generateRow(data) {
         return `<tr>
         <td>${data.accountNumber}</td>
-        <td>${data.amount}</td>
+        <td class="${data.amount < 0 ? 'warning' : 'cashGood'}">${data.amount}</td>
         <td>${shortFormatDate(data.date)}</td>
         </tr>`
     }
@@ -56,12 +56,12 @@ export class History {
     }
 
     toggleSortDirection(evt) {
-        const btn = evt.target;
+        const btn = evt.currentTarget;
         const sortColumn = btn.dataset.columnSort;
         const sortDirection = btn.dataset.sortDirection || null;
         const sortingData = this.makeTransactionList();
 
-        this.resetSortDirections();
+        this.resetSortDirections(btn);
 
         switch (sortDirection) {
             case 'down':
@@ -78,7 +78,7 @@ export class History {
         this.addArrow(btn.dataset.sortDirection, btn);
     }
 
-    resetSortDirections() {
+    resetSortDirections(curentColumn) {
         const allColumns = historyContainer.querySelectorAll('.js-sort-transaction');
         allColumns.forEach(item => {
             item.dataset.sortDirection = '';
@@ -87,7 +87,6 @@ export class History {
     }
 
     addArrow(sortDirection, element) {
-        console.log('sortDirection: ', sortDirection);
         const arrowIco = `<i class="fas fa-arrow-up"></i>`;
 
         switch (sortDirection) {
@@ -106,7 +105,8 @@ export class History {
     removeArrow(element) {
         const arrow = element.querySelector('.fa-arrow-up');
         if (arrow) {
-            element.removeChild(arrow);
+            const elementTxt = element.textContent;
+            element.textContent = elementTxt;
         }
     }
 }

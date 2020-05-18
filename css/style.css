@@ -14,30 +14,21 @@
     font-size: 24px;
 }
 
-.u-round-r  {
-    border-radius: 0 6px 6px 0 !important;
-}
-
 .action__buttons {
     margin-bottom: 16px;
-
 }
 
 .section {
     padding: 32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    transition: 1850ms ;
+    transition: 1850ms;
 }
-
 
 .slide {
     height: 0;
     overflow: hidden;
 }
-
-
-
 
 .fa-piggy-bank {
     color: dodgerblue;
@@ -78,7 +69,6 @@
     padding-bottom: 8px;
 }
 
-
 .warning {
     color: rgb(172, 0, 0);
 }
@@ -87,7 +77,10 @@
     color: green;
 }
 
-
+.table__header .fa-arrow-up {
+    margin-left: 8px;
+    transition: 500ms all linear;
+}
 
 /* UTILITIES CLASS */
 
@@ -95,7 +88,7 @@
     margin-left: 16px;
 }
 
-.u-mt--sm{
+.u-mt--sm {
     margin-top: 16px;
 }
 
@@ -111,7 +104,10 @@
     width: 80px;
 }
 
-
-.u-text--center{
+.u-text--center {
     text-align: center;
+}
+
+.u-round-r {
+    border-radius: 0 6px 6px 0 !important;
 }
