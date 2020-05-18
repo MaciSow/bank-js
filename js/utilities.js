@@ -1,3 +1,5 @@
+import { Account } from "./Account.js";
+
 export function shortFormatDate(date) {
     return `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}
     ${addZero(date.getHours())}:${addZero(date.getMinutes())}`
@@ -133,7 +135,7 @@ export function slideReset(current) {
 
 export function fillAccountList(accounts, inputSelect){
     accounts.forEach(item => {
-        let option = `<option value="${item.accountNumber}">${item.accountNumber}</option>`;
+        let option = `<option value="${item.accountNumber}">${Account.formatAccountNumber(item.accountNumber)}</option>`;
         inputSelect.innerHTML += option;
     });
 }

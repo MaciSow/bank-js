@@ -73,7 +73,7 @@ function readData(file) {
             let lines = item.split('\n')
             lines = lines.filter(item => item !== "" && item.charCodeAt(0) !== 13);
             let userData = lines[0].split(' ');
-            const account = new Account(+userData[0], userData[1], userData[2], +userData[3], +userData[4], null)
+            const account = new Account(userData[0], userData[1], userData[2], +userData[3], +userData[4], null)
 
             for (let j = 1; j < lines.length - 1; j++) {
                 const transactionData = lines[j].split(' ');

@@ -1,5 +1,6 @@
-import { slideReset, shortFormatDate } from "./utilities.js";
+import { slideReset, shortFormatDate, formatAmount } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
+import { Account } from "./Account.js";
 
 export class History {
     historyContainer = document.querySelector('#historyContainer');
@@ -44,8 +45,8 @@ export class History {
 
     generateRow(data) {
         return `<tr>
-        <td>${data.accountNumber}</td>
-        <td class="${data.amount < 0 ? 'warning' : 'cashGood'}">${data.amount}</td>
+        <td>${Account.formatAccountNumber(data.accountNumber)}</td>
+        <td class="${data.amount < 0 ? 'warning' : 'cashGood'}">${formatAmount(data.amount)}</td>
         <td>${shortFormatDate(data.date)}</td>
         </tr>`
     }
