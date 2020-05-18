@@ -47,7 +47,7 @@ export class Payment {
     submit() {
         const accountNumber = this.inputSelect.selectedOptions[0].value;
         const amountValue = roundNumber(this.inputAmount.value);
-        const account = this.accounts.find(item => String(item.accountNumber) == accountNumber);
+        const account = this.accounts.find(item => item.accountNumber == accountNumber);
 
         if (amountValue > account.balance + account.debit) {
             this.inputAmount.classList.add('is-invalid');

@@ -68,7 +68,6 @@ export class Account {
     }
 
     static formatAccountNumber(accountNumber) {
-        const stringAccNum = String(accountNumber);
-        return `${stringAccNum.substr(0, 2)} ${stringAccNum.substr(6, 4)} ${stringAccNum.substr(10, 4)} ${stringAccNum.substr(14, 4)} ${stringAccNum.substr(18, 4)} ${stringAccNum.substr(22, 4)} ${stringAccNum.substr(26, 4)}`
+        return `${accountNumber.substr(0, 2)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)} ${accountNumber.substr(26, 4)}`
     }
 }

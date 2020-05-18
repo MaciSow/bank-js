@@ -34,7 +34,7 @@ export class Transfer {
     }
 
     changeSenderAccount() {
-        this.senderSelectedAccount = +this.senderAccNumSelect.selectedOptions[0].value;
+        this.senderSelectedAccount = this.senderAccNumSelect.selectedOptions[0].value;
         this.inputTransferGroup.classList.add('u-hide');
 
         if (this.senderSelectedAccount === 0) {
@@ -50,7 +50,7 @@ export class Transfer {
     }
 
     changeReceiverAccount() {
-        const receiverSelectedAccount = +this.receiverAccNumSelect.selectedOptions[0].value;
+        const receiverSelectedAccount = this.receiverAccNumSelect.selectedOptions[0].value;
 
         if (receiverSelectedAccount === 0) {
             this.inputTransferGroup.classList.add('u-hide');
@@ -82,8 +82,8 @@ export class Transfer {
         const senderAccountNumber = this.senderAccNumSelect.selectedOptions[0].value;
         const receiverAccountNumber = this.receiverAccNumSelect.selectedOptions[0].value;
 
-        const senderAccount = this.accounts.find(item => String(item.accountNumber) == senderAccountNumber);
-        const receiverAccount = this.accounts.find(item => String(item.accountNumber) == receiverAccountNumber);
+        const senderAccount = this.accounts.find(item => item.accountNumber == senderAccountNumber);
+        const receiverAccount = this.accounts.find(item => item.accountNumber == receiverAccountNumber);
 
         const amountValue = roundNumber(this.transferAmount.value);
 
