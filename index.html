@@ -127,11 +127,18 @@
             </div>
 
             <div id="historyContainer" class="slide js-slide-reset">
-                <h3 class="display-3">History</h3>
+                <div class="history__head">
+                    <h3 class="display-3">History</h3>
+                    <div class="history__filter-container">
+                        <input type="search" name="filter" class="history__filter js-filter">
+                        <i class="fas fa-search history__filter-ico"></i>
+                    </div>
+                </div>
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th class="js-sort-transaction table__header" data-column-sort="accountNumber">Account Number</th>
+                            <th class="js-sort-transaction table__header" data-column-sort="accountNumber">Account
+                                Number</th>
                             <th class="js-sort-transaction table__header" data-column-sort="amount">Amount</th>
                             <th class="js-sort-transaction table__header" data-column-sort="date">Date</th>
                         </tr>

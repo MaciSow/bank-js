@@ -5,6 +5,7 @@ import { Account } from "./Account.js";
 export class History {
     historyContainer = document.querySelector('#historyContainer');
     tableBody = historyContainer.querySelector('.js-table-body');
+    filterInput = historyContainer.querySelector('.js-filter');
 
     accounts = [];
 
@@ -16,6 +17,7 @@ export class History {
         slideReset(this.historyContainer);
         this.fillTable(this.makeTransactionList());
         this.listenSortClick();
+        this.filterInput.addEventListener('input', this.filterTable.bind(this))
     }
 
 
@@ -110,4 +112,58 @@ export class History {
             element.textContent = elementTxt;
         }
     }
+
+    filterTable() {
+        const word = String(this.filterInput.value);
+        const tranasactionList = this.makeTransactionList();
+       
+        const column = this.getColumnSort();
+        this.sortTransactions(tranasactionList, column.dataset.columnSort, column.dataset.sortDirection);
+
+        if (word.length < 3) {
+            this.fillTable(tranasactionList);
+            return;
+        }
+        const filteredTransactionList = tranasactionList.filter(element => {
+
+            if (element.accountNumber.indexOf(word) > -1) {
+                return true;
+            }
+            if (Account.formatAccountNumber(element.accountNumber).indexOf(word) > -1) {
+                return true;
+            }
+            if (String(element.amount).indexOf(word) > -1) {
+                return true;
+            }
+            if (shortFormatDate(element.date).indexOf(word) > -1) {
+                return true;
+            }
+            return false;
+        })
+        this.fillTable(filteredTransactionList);
+    }
+
+    sortTransactions(transactions, property, direction) {
+        switch (direction) {
+            case 'up':
+                transactions.sort((a, b) => a[property] - b[property]);
+                break;
+            case 'down':
+                transactions.sort((a, b) => b[property] - a[property]);
+                break;
+            default:
+        }
+    }
+
+    getColumnSort() {
+        const allColumns = historyContainer.querySelectorAll('.js-sort-transaction');
+        let column;
+        allColumns.forEach(item => {
+            if (item.dataset.sortDirection === 'up' || item.dataset.sortDirection === 'down') {
+                column = item;
+            }
+        })
+        return column;
+    }
+
 }
