@@ -1,5 +1,4 @@
 import { slideReset, shortFormatDate, formatAmount } from "./utilities.js";
-import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 
 export class History {
@@ -8,7 +7,9 @@ export class History {
     filterInput = historyContainer.querySelector('.js-filter');
 
     accounts = [];
-    filteredTransactionList = []
+    filterWord = '';
+    sortDirection = null;
+    sortColumn = null;
 
     init(accounts) {
         this.accounts = accounts;
@@ -16,25 +17,9 @@ export class History {
 
     show() {
         slideReset(this.historyContainer);
-        this.filteredTransactionList = this.makeTransactionList();
-        console.log('this.filteredTransactionList: ', this.filteredTransactionList);
-        this.fillTable(this.filteredTransactionList);
+        this.composeTransactionList();
         this.listenSortClick();
-        this.filterInput.addEventListener('input', this.filterTable.bind(this))
-    }
-
-    makeTransactionList() {
-        let transactionItems = [];
-        this.accounts.forEach(account => {
-            account.transactions.forEach(transaction => {
-                transactionItems.push({
-                    accountNumber: account.accountNumber,
-                    amount: transaction.amount,
-                    date: transaction.date
-                });
-            })
-        })
-        return transactionItems;
+        this.listenFilterInput();
     }
 
     listenSortClick() {
@@ -42,44 +27,77 @@ export class History {
         buttons.forEach(item => item.addEventListener('click', evt => this.toggleSortDirection(evt)))
     }
 
+    listenFilterInput(){
+        this.filterInput.addEventListener('input', this.composeTransactionList.bind(this))
+    }
+
+    composeTransactionList() {
+        let transactionList = this.makeTransactionList();
+        this.filterWord = String(this.filterInput.value);
+       
+        if (this.sortColumn) {
+            this.sortTransactions(transactionList);
+        }
+        
+        if (this.filterWord.length > 2) {
+            transactionList = this.filterTable(transactionList);
+        }
+
+        this.tableBody.innerHTML = this.generateTableBody(transactionList);
+    }
+
     toggleSortDirection(evt) {
         const btn = evt.currentTarget;
-        const sortColumn = btn.dataset.columnSort;
-        const sortDirection = btn.dataset.sortDirection || null;
-        let sortingData = [...this.filteredTransactionList];
+        this.sortColumn = btn.dataset.columnSort;
+        this.sortDirection = btn.dataset.sortDirection || null;
+
+        switch (this.sortDirection) {
+            case 'down':
+                this.sortDirection = null;
+                break;
+            case 'up':
+                this.sortDirection = 'down';
+                break;
+            default:
+                this.sortDirection = 'up';
+        }
 
         this.resetSortDirections();
-
-        switch (sortDirection) {
-            case 'down':
-                break;
-            case 'up':
-                this.sortTransactions(sortingData, sortColumn, 'down')
-                // sortingData.sort((a, b) => b[sortColumn] - a[sortColumn]);
-                btn.dataset.sortDirection = 'down';
-                break;
-            default:
-                this.sortTransactions(sortingData, sortColumn, 'up')
-                // sortingData.sort((a, b) => a[sortColumn] - b[sortColumn]);
-                btn.dataset.sortDirection = 'up';
-        }
-        // this.filteredTransactionList = sortingData;
-        this.fillTable(sortingData);
-        this.addArrow(btn.dataset.sortDirection, btn);
+        btn.dataset.sortDirection = this.sortDirection;
+        this.addArrow(btn);
+        this.composeTransactionList();
     }
 
-    sortTransactions(transactions, property, direction) {
-        switch (direction) {
+    sortTransactions(transactionList) {
+        switch (this.sortDirection) {
             case 'up':
-                transactions.sort((a, b) => a[property] - b[property]);
+                transactionList.sort((a, b) => a[this.sortColumn] - b[this.sortColumn]);
                 break;
             case 'down':
-                transactions.sort((a, b) => b[property] - a[property]);
+                transactionList.sort((a, b) => b[this.sortColumn] - a[this.sortColumn]);
                 break;
             default:
         }
     }
-
+    
+    filterTable(transactionList) {  
+        return transactionList.filter(element => {
+            if (element.accountNumber.indexOf(this.filterWord) > -1) {
+                return true;
+            }
+            if (Account.formatAccountNumber(element.accountNumber).indexOf(this.filterWord) > -1) {
+                return true;
+            }
+            if (String(element.amount).indexOf(this.filterWord) > -1) {
+                return true;
+            }
+            if (shortFormatDate(element.date).indexOf(this.filterWord) > -1) {
+                return true;
+            }
+            return false;
+        })
+    }
+    
     resetSortDirections() {
         const allColumns = historyContainer.querySelectorAll('.js-sort-transaction');
         allColumns.forEach(item => {
@@ -88,57 +106,10 @@ export class History {
         });
     }
 
-    filterTable() {
-        const word = String(this.filterInput.value);
-        let transactionList = this.makeTransactionList();
-
-        const column = this.getColumnSort();
-        if (column) {
-            this.filteredTransactionList = this.makeTransactionList();
-            transactionList = [...this.filteredTransactionList];
-            this.sortTransactions(transactionList, column.dataset.columnSort, column.dataset.sortDirection);
-        }
-        if (word.length < 3) {
-            this.fillTable(transactionList);
-            return;
-        }
-        this.filteredTransactionList = this.filteredTransactionList.filter(element => {
-            if (element.accountNumber.indexOf(word) > -1) {
-                return true;
-            }
-            if (Account.formatAccountNumber(element.accountNumber).indexOf(word) > -1) {
-                return true;
-            }
-            if (String(element.amount).indexOf(word) > -1) {
-                return true;
-            }
-            if (shortFormatDate(element.date).indexOf(word) > -1) {
-                return true;
-            }
-            return false;
-        })
-        transactionList = [...this.filteredTransactionList];
-        if (column) {
-            this.sortTransactions(transactionList, column.dataset.columnSort, column.dataset.sortDirection)
-        }
-        this.fillTable(transactionList);
-    }
-
-    getColumnSort() {
-        const allColumns = historyContainer.querySelectorAll('.js-sort-transaction');
-        let column;
-        allColumns.forEach(item => {
-            if (item.dataset.sortDirection === 'up' || item.dataset.sortDirection === 'down') {
-                column = item;
-            }
-        })
-        return column;
-    }
-
-    addArrow(sortDirection, element) {
+    addArrow(element) {
         const arrowIco = `<i class="fas fa-arrow-up"></i>`;
 
-        switch (sortDirection) {
+        switch (this.sortDirection) {
             case 'up':
                 element.insertAdjacentHTML('beforeend', arrowIco);
                 break;
@@ -159,8 +130,18 @@ export class History {
         }
     }
 
-    fillTable(transactionList) {
-        this.tableBody.innerHTML = this.generateTableBody(transactionList);
+    makeTransactionList() {
+        let transactionItems = [];
+        this.accounts.forEach(account => {
+            account.transactions.forEach(transaction => {
+                transactionItems.push({
+                    accountNumber: account.accountNumber,
+                    amount: transaction.amount,
+                    date: transaction.date
+                });
+            })
+        })
+        return transactionItems;
     }
 
     generateTableBody(transactionItems) {
