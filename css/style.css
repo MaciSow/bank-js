@@ -106,6 +106,15 @@
     transition: 500ms all linear;
 }
 
+.table__header:nth-child(2) { 
+    min-width: 120px;
+}
+
+.table__header:nth-child(3) { 
+    width: 180px;
+}
+
+
 /* UTILITIES CLASS */
 
 .u-ml--sm {
