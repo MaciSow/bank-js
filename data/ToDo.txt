@@ -1,4 +1,4 @@
 To do list 
-History -> filtr transaction list 
-History -> clear table before show  
-Save changes to file
+balance problem
+Contest
+notifications

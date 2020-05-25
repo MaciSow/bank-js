@@ -5,6 +5,10 @@ export function shortFormatDate(date) {
     ${addZero(date.getHours())}:${addZero(date.getMinutes())}`
 }
 
+export function toFileFormatDate(date) {
+    return `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}T${addZero(date.getHours())}:${addZero(date.getMinutes())}`
+}
+
 export function toggleDisableBtn(btn, condition1, condition2) {
     if (condition1 && condition2) {
         btn.removeAttribute('disabled');
@@ -133,15 +137,24 @@ export function slideReset(current) {
     }, anyOpen ? 250 : 0)
 }
 
-export function fillAccountList(accounts, inputSelect){
+export function fillAccountList(accounts, inputSelect) {
     accounts.forEach(item => {
         let option = `<option value="${item.accountNumber}">${Account.formatAccountNumber(item.accountNumber)}</option>`;
         inputSelect.innerHTML += option;
     });
 }
 
-export function clearAccountList(inputSelect, direction){
+export function clearAccountList(inputSelect, direction) {
     inputSelect.selectedIndex = 0;
     inputSelect.innerHTML = null;
     inputSelect.innerHTML = `<option value="0" selected>Select ${direction} Account Number...</option>`;
+}
+
+export function generateFile(accounts) {
+    let content = '';
+    accounts.forEach(account => {
+        content += account.toString();
+        content += '########################################\n'
+    })
+    return content;
 }

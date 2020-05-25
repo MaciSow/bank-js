@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideDown, slideToggle, slideReset } from "./utilities.js";
+import { slideDown, slideToggle, generateFile } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 import { Payment } from "./Payment.js";
@@ -11,6 +11,8 @@ const btnPayment = document.querySelector('#btnPayment');
 const btnTransfer = document.querySelector('#btnTransfer');
 const btnHistory = document.querySelector('#btnHistory');
 const btnContest = document.querySelector('#btnContest');
+
+const btnSave = document.querySelector('#btnSave');
 
 const payment = new Payment();
 const transfer = new Transfer();
@@ -33,13 +35,13 @@ bankDataInput.addEventListener('change', () => {
     }, 0);
 });
 
-
-
 btnPayment.addEventListener('click', payment.show.bind(payment));
 
 btnTransfer.addEventListener('click', transfer.show.bind(transfer));
 
 btnHistory.addEventListener('click', history.show.bind(history));
+
+btnSave.addEventListener('click', saveData);
 
 function generateAccountList(accounts) {
     let accountItems = '';
@@ -74,7 +76,7 @@ function readData(file) {
             lines = lines.filter(item => item !== "" && item.charCodeAt(0) !== 13);
             let userData = lines[0].split(' ');
             const account = new Account(userData[0], userData[1], userData[2], +userData[3], +userData[4], null)
-            
+
 
             for (let j = 1; j < lines.length - 1; j++) {
                 const transactionData = lines[j].split(' ');
@@ -89,3 +91,17 @@ function readData(file) {
     reader.readAsText(file);
     return accounts;
 }
+
+function saveData() {
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(generateFile(accounts)));
+    element.setAttribute('download', 'bank.txt');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+

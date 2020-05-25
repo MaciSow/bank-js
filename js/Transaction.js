@@ -1,4 +1,4 @@
-import { roundNumber, shortFormatDate, formatAmount } from "./utilities.js";
+import { roundNumber, shortFormatDate, formatAmount, toFileFormatDate, } from "./utilities.js";
 
 
 export class Transaction {
@@ -14,6 +14,9 @@ export class Transaction {
         console.log(`date: ${this.date} amount: ${this.amount}`);
     }
 
+    toString() {
+        return `${toFileFormatDate(this.date)} ${this.amount > 0 ? '+' : ''}${formatAmount(this.amount)}`
+    }
 
     generateHtmlTransaction() {
         const shortDate = shortFormatDate(this.date);

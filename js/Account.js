@@ -27,6 +27,15 @@ export class Account {
         transactions ${transactions}`);
     }
 
+    toString() {
+        let transactionsString = '';
+        this.transactions.forEach(item => {
+            transactionsString += item.toString() + '\n';
+        });
+
+        return `${this.accountNumber} ${this.name} ${this.surname} ${this.balance > 0 ? '+' : ''}${this.balance} ${this.debit}\n${transactionsString}`
+    }
+
     addTransaction(transaction) {
         this.transactions.push(transaction);
     }

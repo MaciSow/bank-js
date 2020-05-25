@@ -1,3 +1,7 @@
+.navbar {
+    justify-content: space-between ;
+}
+
 .jumbotron {
     margin: 0;
 }
@@ -32,6 +36,10 @@
 
 .fa-piggy-bank {
     color: dodgerblue;
+}
+
+.btn-save {
+    padding: 3px 14px;
 }
 
 .fa-money-bill-wave {
