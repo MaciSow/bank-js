@@ -11,12 +11,9 @@ export class History {
     sortDirection = null;
     sortColumn = null;
 
-    init(accounts) {
-        this.accounts = accounts;
-    }
-
-    show() {
+    show(accounts) {
         slideReset(this.historyContainer);
+        this.accounts = accounts;
         this.composeTransactionList();
         this.listenSortClick();
         this.listenFilterInput();

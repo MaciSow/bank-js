@@ -133,7 +133,9 @@ export function slideReset(current) {
         }
     })
     setTimeout(() => {
-        slideToggle(current);
+        if  (current) {
+            slideToggle(current);
+        }
     }, anyOpen ? 250 : 0)
 }
 

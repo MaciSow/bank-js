@@ -1,4 +1,4 @@
-import { slideDown, slideToggle, generateFile } from "./utilities.js";
+import { slideDown, slideToggle, generateFile, slideReset } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 import { Payment } from "./Payment.js";
@@ -24,24 +24,33 @@ bankDataInput.addEventListener('change', () => {
     let file = input.files[0];
 
     accounts = readData(file);
-    payment.init(accounts);
-    transfer.init(accounts);
-    history.init(accounts);
 
     setTimeout(() => {
+        if (accounts.length === 0) {
+            return;
+        }
+
+        btnSave.removeAttribute('disabled');
         const actionContainer = document.querySelector('#actionContainer');
+
         slideDown(actionContainer);
         generateAccountList(accounts);
+        slideReset();
     }, 0);
 });
 
-btnPayment.addEventListener('click', payment.show.bind(payment));
+btnPayment.addEventListener('click', () => payment.show(accounts));
 
-btnTransfer.addEventListener('click', transfer.show.bind(transfer));
+btnTransfer.addEventListener('click', () => transfer.show(accounts));
 
-btnHistory.addEventListener('click', history.show.bind(history));
+btnHistory.addEventListener('click', () => history.show(accounts));
 
 btnSave.addEventListener('click', saveData);
+
+function wrapper() {
+    payment.show();
+}
+
 
 function generateAccountList(accounts) {
     let accountItems = '';
@@ -61,6 +70,8 @@ function generateAccountList(accounts) {
         });
     })
 }
+
+
 
 function readData(file) {
     let accounts = [];

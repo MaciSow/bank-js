@@ -11,16 +11,16 @@ export class Transfer {
     senderSelectedAccount;
     accounts = [];
 
-    init(accounts) {
-        this.accounts = accounts;
+    constructor() {
         this.senderAccNumSelect.addEventListener('change', this.changeSenderAccount.bind(this))
         this.receiverAccNumSelect.addEventListener('change', this.changeReceiverAccount.bind(this))
         this.transferAmount.addEventListener('input', this.inputTransferAmount.bind(this))
         this.transferSubmit.addEventListener('click', this.submit.bind(this))
     }
 
-    show() {
+    show(accounts) {
         this.clear();
+        this.accounts = accounts;
         fillAccountList(this.accounts, this.senderAccNumSelect);
     }
 
@@ -87,11 +87,12 @@ export class Transfer {
 
         const amountValue = roundNumber(this.transferAmount.value);
 
-        senderAccount.balance -= amountValue;
+        senderAccount.balance = (senderAccount.balance * 100 - amountValue * 100) / 100;
         const senderTransaction = new Transaction(null, -amountValue);
         senderAccount.addTransaction(senderTransaction);
         senderAccount.rebuildTransactions();
 
+        receiverAccount.balance = (receiverAccount.balance * 100 - amountValue * 100) / 100;
         receiverAccount.balance += amountValue;
         const receiverTransaction = new Transaction(null, amountValue);
         receiverAccount.addTransaction(receiverTransaction);

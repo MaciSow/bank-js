@@ -1,4 +1,4 @@
-import { toggleDisableBtn, roundNumber, slideUp, slideReset, fillAccountList, clearAccountList} from "./utilities.js";
+import { toggleDisableBtn, roundNumber, slideUp, slideReset, fillAccountList, clearAccountList } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 
 export class Payment {
@@ -10,22 +10,21 @@ export class Payment {
     isAmount = false;
     accounts = [];
 
-
-    init(accounts) {
-        this.accounts = accounts;
+    constructor() {
         this.inputSelect.addEventListener('change', this.changeAccount.bind(this));
         this.inputAmount.addEventListener('input', this.changeAmount.bind(this));
         this.submitBtn.addEventListener('click', this.submit.bind(this));
     }
 
-    show() {
+    show(accounts) {
         this.clear();
-        fillAccountList(this.accounts,this.inputSelect);
+        this.accounts = accounts;
+        fillAccountList(this.accounts, this.inputSelect);
     }
 
     clear() {
         slideReset(this.paymentContainer);
-        clearAccountList(this.inputSelect,'')
+        clearAccountList(this.inputSelect, '')
         this.inputAmount.value = '';
         this.submitBtn.setAttribute('disabled', true);
         this.inputAmount.classList.remove('is-invalid');
@@ -56,7 +55,7 @@ export class Payment {
             return;
         }
 
-        account.balance -= amountValue;
+        account.balance = (account.balance * 100 - amountValue * 100) / 100;
         const transaction = new Transaction(null, -amountValue);
         account.addTransaction(transaction);
         account.rebuildTransactions();
