@@ -1,9 +1,10 @@
-import { slideDown, slideToggle, generateFile, slideReset } from "./utilities.js";
+import { slideDown, slideToggle, generateFile, slideReset, slideUp } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
 import { Account } from "./Account.js";
 import { Payment } from "./Payment.js";
 import { Transfer } from "./Transfer.js";
 import { History } from "./History.js";
+import { Notification } from "./Notification.js";
 
 let accounts = [];
 let bankDataInput = document.querySelector('#bankDataInput');
@@ -26,12 +27,19 @@ bankDataInput.addEventListener('change', () => {
     accounts = readData(file);
 
     setTimeout(() => {
+        const actionContainer = document.querySelector('#actionContainer');
+        const detailsContainer = document.querySelector('#detailsContainer');
+
         if (accounts.length === 0) {
+            console.log('test');
+            btnSave.setAttribute('disabled', true);
+            slideUp(actionContainer);
+            slideUp(detailsContainer);
             return;
         }
 
+        new Notification('File open')
         btnSave.removeAttribute('disabled');
-        const actionContainer = document.querySelector('#actionContainer');
 
         slideDown(actionContainer);
         generateAccountList(accounts);
@@ -45,12 +53,9 @@ btnTransfer.addEventListener('click', () => transfer.show(accounts));
 
 btnHistory.addEventListener('click', () => history.show(accounts));
 
+// btnContest.addEventListener('click', () => new Notification('schabowy'));
+
 btnSave.addEventListener('click', saveData);
-
-function wrapper() {
-    payment.show();
-}
-
 
 function generateAccountList(accounts) {
     let accountItems = '';
@@ -70,8 +75,6 @@ function generateAccountList(accounts) {
         });
     })
 }
-
-
 
 function readData(file) {
     let accounts = [];

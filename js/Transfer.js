@@ -1,5 +1,6 @@
 import { roundNumber, slideUp, slideReset, fillAccountList, clearAccountList } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
+import { Notification } from "./Notification.js";
 
 export class Transfer {
     transferContainer = document.querySelector('#transferContainer');
@@ -98,5 +99,6 @@ export class Transfer {
         receiverAccount.addTransaction(receiverTransaction);
         receiverAccount.rebuildTransactions();
         slideUp(this.transferContainer);
+        new Notification('Transfer');
     }
 }

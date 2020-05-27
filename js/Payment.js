@@ -1,5 +1,6 @@
 import { toggleDisableBtn, roundNumber, slideUp, slideReset, fillAccountList, clearAccountList } from "./utilities.js";
 import { Transaction } from "./Transaction.js";
+import { Notification } from "./Notification.js";
 
 export class Payment {
     paymentContainer = document.querySelector('#paymentContainer');
@@ -60,5 +61,6 @@ export class Payment {
         account.addTransaction(transaction);
         account.rebuildTransactions();
         slideUp(this.paymentContainer);
+        new Notification('Payment');
     }
 }
