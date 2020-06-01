@@ -53,7 +53,7 @@ export class Account {
                     <div class="account__header">
                         <span>${Account.formatAccountNumber(this.accountNumber)}</span> 
                         <span><i class="fas fa-user"></i>  ${this.name} ${this.surname}</span> 
-                        <span class="${this.balance < 0 ? 'warning' : 'account__balance'}">${this.balance}${this.balance < 0 ? ' <i class="fas fa-exclamation"></i>' : ''}</span> 
+                        <span class="${this.balance < 0 ? 'u-warning' : 'account__balance'}">${this.balance}${this.balance < 0 ? ' <i class="fas fa-exclamation"></i>' : ''}</span> 
                         <span>${this.debit}</span> 
                     </div>
                     <div class="slide">

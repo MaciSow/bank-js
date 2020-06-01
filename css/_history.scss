@@ -1,0 +1,38 @@
+.history {
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
+
+    &__filter {
+        border: 1px solid gray;
+        border-radius: 8px;
+        padding: 4px 4px 4px 32px;
+
+        &-container {
+            position: relative;
+        }
+
+        &-ico {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+    }
+}
+
+.table__header {
+    & .fa-arrow-up {
+        margin-left: 8px;
+        transition: 500ms all linear;
+    }
+
+    &:nth-child(2) {
+        min-width: 120px;
+    }
+
+    &:nth-child(3) {
+        width: 180px;
+    }
+}

@@ -150,7 +150,7 @@ export class History {
     generateRow(data) {
         return `<tr>
         <td>${Account.formatAccountNumber(data.accountNumber)}</td>
-        <td class="${data.amount < 0 ? 'warning' : 'cashGood'}">${formatAmount(data.amount)}</td>
+        <td class="${data.amount < 0 ? 'u-warning' : 'u-cashGood'}">${formatAmount(data.amount)}</td>
         <td>${shortFormatDate(data.date)}</td>
         </tr>`
     }
