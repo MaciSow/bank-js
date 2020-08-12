@@ -1,4 +1,4 @@
-import { slideReset } from "./utilities.js";
+import { slideReset, slideDown } from "./utilities.js";
 const LOTTERY_COST = 1500;
 
 export class Contest {
@@ -6,6 +6,8 @@ export class Contest {
     playerList = contestContainer.querySelector('.js-player-list');
     drawContainer = contestContainer.querySelector('.js-contest-draw');
     btnDraw = contestContainer.querySelector('#btnDraw');
+    winnerContainer = contestContainer.querySelector('.js-winners');
+    winnerList = this.winnerContainer.querySelector('.js-winner-list');
 
     accounts = [];
 
@@ -17,6 +19,7 @@ export class Contest {
         this.btnDraw.addEventListener('click', () => {
             const drawnNumbers = this.drawNumbers();
             this.compareNumbers(drawnNumbers);
+            slideDown(this.winnerContainer);
         });
     }
 
@@ -31,9 +34,9 @@ export class Contest {
             let numberList = '';
             numbers.forEach(element => numberList += `<span class="ball js-ball">${element}</span>`);
 
-            htmlPlayer += ` <li class="player-list__item">
+            htmlPlayer += ` <li class="item js-player" data-account="${account.accountNumber}">
                                 <span class="col-left ${notPlay}">G${number} ${account.name}</span>
-                                <div class="u-d-flex">${notPlay ? '' : numberList}</div>
+                                <span class="col-right">${notPlay ? '' : numberList}</span>
                             </li>`;
 
             notPlay ? null : number++;
@@ -48,7 +51,7 @@ export class Contest {
         const numbers = this.generateRandomNumbers(6).sort((a, b) => a - b);
 
         numbers.forEach(element => numberList += `<span class="ball ball--yellow">${element}</span>`);
-        htmlNumbers = `<div class="u-d-flex"> ${numberList}</div>`;
+        htmlNumbers = `<span class="u-d-flex"> ${numberList}</span>`;
 
         this.btnDraw.classList.add('u-hide');
 
@@ -73,14 +76,45 @@ export class Contest {
     }
 
     compareNumbers(drawnNumbers) {
-        const balls = this.playerList.querySelectorAll('.js-ball');
-        console.log('balls: ', balls);
+        const players = this.playerList.querySelectorAll('.js-player');
 
-        balls.forEach(ball => {
-            if(drawnNumbers.find(item => item === +(ball.innerText))){
-                ball.classList.add('ball--yellow');
-            }
-           
+        players.forEach(player => {
+            const balls = player.querySelectorAll('.js-ball');
+            let hitBalls = [];
+
+            balls.forEach(ball => {
+                if (drawnNumbers.find(item => item === +(ball.innerText))) {
+                    ball.classList.add('ball--yellow');
+                    hitBalls.push(ball);
+                }
+            })
+
+            this.generateWinnerList(player, hitBalls);
         })
     }
+
+    generateWinnerList(player, hitBalls) {
+        const name = player.children[0].innerText.substr(3);
+        let htmlWinner = '<span class="u-warning">NOOBS!!!</span>';
+
+        if (hitBalls.length > 2) {
+            let htmlBalls = '';
+            htmlWinner = '';
+
+            hitBalls.forEach(ball => {
+                htmlBalls += ball.outerHTML;
+            })
+
+            htmlWinner += `<li class="item">
+                             <span class="col-left">${name}</span>
+                             <span class="col-right">
+                             <span class="u-d-flex-center u-mr--sm">hits</span>
+                             ${htmlBalls}</span>
+                            </li>`;
+
+        }
+        this.winnerList.innerHTML = null;
+        this.winnerList.insertAdjacentHTML('beforeend', htmlWinner)
+    }
 }
+

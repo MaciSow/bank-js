@@ -2,6 +2,10 @@
     margin-left: 16px;
 }
 
+.u-mr--sm {
+    margin-right: 16px;
+}
+
 .u-mt--sm {
     margin-top: 16px;
 }
@@ -34,6 +38,11 @@
     color: green;
 }
 
-.u-d-flex{
+.u-d-flex {
     display: flex;
+}
+
+.u-d-flex-center {
+    display: flex;
+    align-items: center;
 }

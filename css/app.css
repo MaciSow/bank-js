@@ -16735,6 +16735,10 @@ readers do not read off random characters that represent icons */
   border-radius: 8px;
 }
 
+.contest__winners {
+  margin-top: 16px;
+}
+
 .contest__draw {
   margin-left: 40px;
   display: -webkit-box;
@@ -16745,14 +16749,41 @@ readers do not read off random characters that represent icons */
           align-items: center;
 }
 
-.contest .col-left {
+.contest__draw .result {
   display: inline-block;
   min-width: 150px;
 }
 
-.contest .col-left.strikethrough {
+.contest__list {
+  list-style-type: none;
+}
+
+.contest__list .item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contest__list .col-left {
+  display: inline-block;
+  min-width: 150px;
+}
+
+.contest__list .col-left.strikethrough {
   text-decoration: line-through;
   color: #700000;
+}
+
+.contest__list .col-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .contest .ball {
@@ -16774,19 +16805,6 @@ readers do not read off random characters that represent icons */
 
 .contest .ball--yellow {
   background-color: rgba(255, 238, 0, 0.6);
-}
-
-.player-list {
-  list-style-type: none;
-}
-
-.player-list__item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 .history__head {
@@ -16871,6 +16889,10 @@ readers do not read off random characters that represent icons */
   margin-left: 16px;
 }
 
+.u-mr--sm {
+  margin-right: 16px;
+}
+
 .u-mt--sm {
   margin-top: 16px;
 }
@@ -16907,5 +16929,14 @@ readers do not read off random characters that represent icons */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.u-d-flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=app.css.map */
