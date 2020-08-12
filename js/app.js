@@ -79,10 +79,9 @@ const data = `
 ########################################
 `;
 
-
 accounts = readDataStatic();
 loadData();
-
+contest.show(accounts);
 
 bankDataInput.addEventListener('change', () => {
     let input = bankDataInput;
@@ -91,6 +90,7 @@ bankDataInput.addEventListener('change', () => {
     accounts = readData(file);
 
     setTimeout(() => loadData());
+    
 });
 
 btnPayment.addEventListener('click', () => payment.show(accounts));
@@ -108,7 +108,7 @@ function loadData() {
     const detailsContainer = document.querySelector('#detailsContainer');
 
     if (accounts.length === 0) {
-        console.log('test');
+        
         btnSave.setAttribute('disabled', true);
         slideUp(actionContainer);
         slideUp(detailsContainer);
@@ -185,13 +185,12 @@ function saveData() {
     document.body.removeChild(element);
 }
 
-
 function readDataStatic() {
     let accounts = [];
 
     let text = data;
 
-    console.log(text);
+    
 
     let tmp = text.split('########################################')
 
@@ -215,4 +214,3 @@ function readDataStatic() {
 
     return accounts;
 }
-

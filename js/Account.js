@@ -78,4 +78,8 @@ export class Account {
     static formatAccountNumber(accountNumber) {
         return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
     }
+
+    hasEnoughMoney(amount) {
+        return this.balance + this.debit >= amount 
+    }
 }

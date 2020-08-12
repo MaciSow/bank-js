@@ -16727,6 +16727,68 @@ readers do not read off random characters that represent icons */
   padding: 3px 14px;
 }
 
+.btn--draw {
+  margin: 8px 4px;
+  padding: 0 0;
+  width: 232px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.contest__draw {
+  margin-left: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contest .col-left {
+  display: inline-block;
+  min-width: 150px;
+}
+
+.contest .col-left.strikethrough {
+  text-decoration: line-through;
+  color: #700000;
+}
+
+.contest .ball {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  margin: 8px 4px;
+  border-radius: 8px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(192, 192, 192, 0.3);
+}
+
+.contest .ball--yellow {
+  background-color: rgba(255, 238, 0, 0.6);
+}
+
+.player-list {
+  list-style-type: none;
+}
+
+.player-list__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .history__head {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -16839,5 +16901,11 @@ readers do not read off random characters that represent icons */
 
 .u-cashGood {
   color: green;
+}
+
+.u-d-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 /*# sourceMappingURL=app.css.map */

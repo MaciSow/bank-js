@@ -1,2 +1,5 @@
 To do list 
-    Contest
+    Contest--> compare numbers 
+    Contest--> mark match numbers
+    Contest--> add win money to accounts
+    Contest--> take money for lottery

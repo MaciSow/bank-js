@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bank</title>
 
     <link rel="stylesheet" href="css/app.css">
 </head>
@@ -133,22 +133,18 @@
                 </table>
             </div>
 
-            <div id="contestContainer" class="slide js-slide-reset">
-                Players List:
-                <ul class="player-list">
-                    <li>
-                        <span class="player-list__name">G1 Ania</span>
-                        <span>1 2 3 4 5 6</span>
-                    </li>
-                    <li>
-                        <span class="player-list__name">G2 Tomek</span>
-                        <span>1 2 3 4 5 6</span>
-                    </li>
-                    <li>
-                        <span class="player-list__name">G3 Jas</span>
-                        <span>1 2 3 4 5 6</span>
-                    </li>
-                    </ol>
+            <div id="contestContainer" class="slide js-slide-reset contest">
+                <div class="contest__players">
+                    Players List:
+                    <ul class="player-list js-player-list"></ul>
+                </div>
+                <div class="contest__game">
+                    Game:
+                    <div class="contest__draw js-contest-draw">
+                        <span class="col-left">Result:</span>
+                        <button id="btnDraw" class="btn btn-success btn--draw">Draw numbers</button>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
