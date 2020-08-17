@@ -1,3 +1,2 @@
 To do list 
-    Contest--> add win money to accounts
-    Contest--> take money for lottery
+    Contest--> show win amount

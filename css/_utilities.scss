@@ -38,8 +38,17 @@
     color: green;
 }
 
+.u-bold{
+    font-weight: bold !important;
+}
+
 .u-d-flex {
     display: flex;
+}
+
+.u-d-flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .u-d-flex-center {

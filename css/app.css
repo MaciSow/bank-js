@@ -16784,6 +16784,7 @@ readers do not read off random characters that represent icons */
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  min-width: 248px;
 }
 
 .contest .ball {
@@ -16925,10 +16926,22 @@ readers do not read off random characters that represent icons */
   color: green;
 }
 
+.u-bold {
+  font-weight: bold !important;
+}
+
 .u-d-flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.u-d-flex-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .u-d-flex-center {

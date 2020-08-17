@@ -88,16 +88,9 @@ export class Transfer {
 
         const amountValue = roundNumber(this.transferAmount.value);
 
-        senderAccount.balance = (senderAccount.balance * 100 - amountValue * 100) / 100;
-        const senderTransaction = new Transaction(null, -amountValue);
-        senderAccount.addTransaction(senderTransaction);
-        senderAccount.rebuildTransactions();
+        senderAccount.doPayment(-amountValue);
+        receiverAccount.doPayment(amountValue);
 
-        receiverAccount.balance = (receiverAccount.balance * 100 - amountValue * 100) / 100;
-        receiverAccount.balance += amountValue;
-        const receiverTransaction = new Transaction(null, amountValue);
-        receiverAccount.addTransaction(receiverTransaction);
-        receiverAccount.rebuildTransactions();
         slideUp(this.transferContainer);
         new Notification('Transfer');
     }

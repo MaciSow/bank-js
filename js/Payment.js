@@ -56,10 +56,7 @@ export class Payment {
             return;
         }
 
-        account.balance = (account.balance * 100 - amountValue * 100) / 100;
-        const transaction = new Transaction(null, -amountValue);
-        account.addTransaction(transaction);
-        account.rebuildTransactions();
+        account.doPayment(amountValue);
         slideUp(this.paymentContainer);
         new Notification('Payment');
     }

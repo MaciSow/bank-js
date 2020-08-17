@@ -81,7 +81,6 @@ const data = `
 
 accounts = readDataStatic();
 loadData();
-contest.show(accounts);
 
 bankDataInput.addEventListener('change', () => {
     let input = bankDataInput;

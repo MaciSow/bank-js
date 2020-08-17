@@ -40,6 +40,14 @@ export class Account {
         this.transactions.push(transaction);
     }
 
+    doPayment(amount){
+        const transaction = new Transaction(null, amount);
+        
+        this.balance = (this.balance * 100 + transaction.amount * 100) / 100;
+        this.addTransaction(transaction);
+        this.rebuildTransactions();
+    }
+
     generateHtmlAccount() {
         let transactionItems = '';
 
