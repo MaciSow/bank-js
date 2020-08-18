@@ -1,0 +1,61 @@
+.contest {
+    &__players {
+    }
+
+    &__winners {
+        margin-top: 16px;
+    }
+
+    &__draw {
+        margin-left: 40px;
+        display: flex;
+        align-items: center;
+
+        .result {
+            display: inline-block;
+            min-width: 150px;
+        }
+    }
+
+    &__list {
+        list-style-type: none;
+
+        .item {
+            display: flex;
+            align-items: center;
+        }
+
+        .col-left { 
+            display: inline-block;
+            min-width: 150px;
+    
+            &.strikethrough { 
+                text-decoration: line-through;
+                color: rgb(112, 0, 0);
+            }
+        }
+
+        .col-right {
+            display: flex;
+            align-items: center;
+            min-width: 248px;
+        }
+    }
+
+
+    .ball{ 
+        display: flex;
+        width: 32px;
+        height: 32px;
+        margin: 8px 4px;
+        border-radius: 8px;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(192, 192, 192, 0.3);
+        
+        &--yellow {
+            background-color: rgba(255, 238, 0, 0.6);
+        }
+    }
+}
+

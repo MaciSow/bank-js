@@ -1,0 +1,2 @@
+To do list 
+    Contest--> show win amount
